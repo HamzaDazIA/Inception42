@@ -1,0 +1,5 @@
+FROM debain:bookworm
+
+RUN apt-get update && apt-get -y upgrade && aot-get -y install nginx openssl 
+
+ENTRYPOINT ["nginx.sh"]

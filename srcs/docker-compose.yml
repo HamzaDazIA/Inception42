@@ -1,0 +1,39 @@
+services:
+  mariadb:
+    build: mariadb
+    container_name: mariadb
+    restart: no-failure
+    env_file: .env
+    networks: docker-networks
+    volumes:
+      -MariDB:/var/lib/mysql 
+
+networks:
+  docker-networks:
+    name: docker-networks
+    driver: bridge
+
+volumes:
+  WordPress:
+    driver: local
+    driver-opts:
+      type : none
+      o : bind
+      device: /home/hdazia/data/wordpress
+  MariaDB:
+    driver: local
+    driver-opt:
+      type : none
+      o : bind
+      device: /home/hdazia/data/mariadb
+
+secrets:
+  mariadb_password:
+    file: ../secrets/mariadb_password
+  mariadb_root_password:
+    file: ../secrets/maraidb_root_password
+  wordpress_admin_password:
+    file: ../secrets/wordpress_admin_password
+  wordpress_password:
+    file: ../secrets/wordpress_password
+     
