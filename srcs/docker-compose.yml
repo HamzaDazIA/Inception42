@@ -28,9 +28,9 @@ volumes:
       device: /home/hdazia/data/mariadb
 
 secrets:
-  mariadb_password:
-    file: ../secrets/mariadb_password
-  mariadb_root_password:
+  db_password:
+    file: ../secrets/db_password
+  db_root_password:
     file: ../secrets/maraidb_root_password
   wordpress_admin_password:
     file: ../secrets/wordpress_admin_password
