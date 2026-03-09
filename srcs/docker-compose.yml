@@ -8,6 +8,30 @@ services:
     volumes:
       -MariDB:/var/lib/mysql 
 
+  nginx:
+    container_name: nginx
+    build: nginx
+    restart: no-failure
+    ports:
+      - "443:443"
+    networks: docker-networks
+    volumes:
+      -WordPress:/var/www/html
+    env_file: .env
+    depends_on:
+      - wordpress
+    
+  wordpress:
+    container_name: wordpress
+    build: wordpress
+    restart: no-failure
+    env_file: .env
+    networks: docker-networks
+    volumes:
+      -WordPress:/var/www/html
+    depends_on:
+      - mariadb
+    
 networks:
   docker-networks:
     name: docker-networks
