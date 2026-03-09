@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ ! -d /etc/.firstrun ]; then
+if [ ! -f /etc/.firstrun ]; then
 
     [ -f /run/secrets/db_root_password ] && export MYSQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
     [ -f /run/secrets/db_password ] && export MYSQL_PASSWORD=$(cat /run/secrets/db_password)

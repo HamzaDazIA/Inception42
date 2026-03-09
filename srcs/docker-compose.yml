@@ -1,37 +1,48 @@
 services:
   mariadb:
-    build: mariadb
+    build: requirements/mariadb
     container_name: mariadb
-    restart: no-failure
+    restart: on-failure
     env_file: .env
-    networks: docker-networks
+    networks:
+      - docker-networks
     volumes:
-      -MariDB:/var/lib/mysql 
+      - MariaDB:/var/lib/mysql
+    secrets:
+      - db_password
+      - db_root_password
 
   nginx:
     container_name: nginx
-    build: nginx
-    restart: no-failure
+    build: requirements/nginx
+    restart: on-failure
     ports:
       - "443:443"
-    networks: docker-networks
+    networks:
+      - docker-networks
     volumes:
-      -WordPress:/var/www/html
+      - WordPress:/var/www/html
     env_file: .env
     depends_on:
       - wordpress
-    
+
   wordpress:
     container_name: wordpress
-    build: wordpress
-    restart: no-failure
+    build: requirements/wordpress
+    restart: on-failure
     env_file: .env
-    networks: docker-networks
+    networks:
+      - docker-networks
     volumes:
-      -WordPress:/var/www/html
+      - WordPress:/var/www/html
+    secrets:
+      - db_password
+      - db_root_password
+      - wordpress_admin_password
+      - wordpress_password
     depends_on:
       - mariadb
-    
+
 networks:
   docker-networks:
     name: docker-networks
@@ -40,24 +51,23 @@ networks:
 volumes:
   WordPress:
     driver: local
-    driver-opts:
-      type : none
-      o : bind
+    driver_opts:
+      type: none
+      o: bind
       device: /home/hdazia/data/wordpress
   MariaDB:
     driver: local
-    driver-opt:
-      type : none
-      o : bind
+    driver_opts:
+      type: none
+      o: bind
       device: /home/hdazia/data/mariadb
 
 secrets:
   db_password:
-    file: ../secrets/db_password
+    file: ../secrets/db_password.txt
   db_root_password:
-    file: ../secrets/maraidb_root_password
+    file: ../secrets/db_root_password.txt
   wordpress_admin_password:
-    file: ../secrets/wordpress_admin_password
+    file: ../secrets/wordpress_admin_password.txt
   wordpress_password:
-    file: ../secrets/wordpress_password
-     
+    file: ../secrets/wordpress_password.txt

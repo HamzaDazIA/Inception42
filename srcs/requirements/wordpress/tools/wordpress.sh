@@ -7,9 +7,9 @@ until mysqladmin ping -h "mariadb" --silent; do
 done
 
 [ -f "/run/secrets/db_password" ] && export DB_PASSWORD=$(cat /run/secrets/db_password)
-[ -f "run/secrets/wordpress_admin_password" ] && export WP_ADMIN_PASSWORD=$(cat /run/secrets/wordpress_admin_password)
+[ -f "/run/secrets/wordpress_admin_password" ] && export WP_ADMIN_PASSWORD=$(cat /run/secrets/wordpress_admin_password)
 [ -f "/run/secrets/db_root_password" ] && export DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
-[ -f "run/secrets/wordpress_password" ] && export WP_PASSWORD=$(cat "run/secrets/wordpress_password")
+[ -f "/run/secrets/wordpress_password" ] && export WP_PASSWORD=$(cat /run/secrets/wordpress_password)
 
 if [ ! -f "/var/www/html/wp-config.php" ]; then
     echo "Start initialization WordPress ... "
@@ -23,23 +23,23 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
         --dbpass=$DB_PASSWORD \
         --allow-root
     
-    wp core install --path=/var/www/html --allow-root\
+    wp core install --path=/var/www/html --allow-root \
         --skip-email \
         --url=$DOMAIN_NAME \
         --title="$WORDPRESS_TITLE" \
         --admin_user=$WORDPRESS_ADMIN_USER \
         --admin_password=$WP_ADMIN_PASSWORD \
-        --email=$WORDPRESS_ADMIN_EMAIL
+        --admin_email=$WORDPRESS_ADMIN_EMAIL
 
-    wp user creat --allow-root\
+    wp user create --allow-root \
         $WORDPRESS_USER \
         $WORDPRESS_EMAIL \
-        --user_password= $WP_PASSWORD \
+        --user_pass=$WP_PASSWORD \
         --role=author
     
     echo "WordPress step completed"
 else
-    echo "Wordpress is already initialaze"
+    echo "Wordpress is already initialized"
 fi
 
 chown -R www-data:www-data /var/www/html

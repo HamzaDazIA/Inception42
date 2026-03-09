@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 set -e
 
 if [ ! -f /etc/.firstrun ]; then
