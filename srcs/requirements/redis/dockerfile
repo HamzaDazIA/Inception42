@@ -1,0 +1,11 @@
+FROM debian:bookworm
+
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y redis-server && rm -rf /var/lib/apt/lists/*
+
+COPY tools/redis.sh /usr/bin/redis.sh
+
+RUN chmod +x /usr/bin/redis.sh
+
+EXPOSE 6379
+
+ENTRYPOINT ["redis.sh"]

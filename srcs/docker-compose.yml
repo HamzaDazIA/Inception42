@@ -42,6 +42,14 @@ services:
       - wordpress_password
     depends_on:
       - mariadb
+  redis:
+    container_name: redis
+    build: requirements/redis
+    restart: on-failure
+    networks:
+      - docker-networks
+    depends_on:
+      - wordpress
 
 networks:
   docker-networks:
