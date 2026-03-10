@@ -2,14 +2,14 @@
 
 set -e 
 
+mkdir -p /run/mysqld
+chown -R mysql:mysql /run/mysqld
+
 if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
     echo "Start initialization Mariadb ... " 
 
     [ -f "/run/secrets/db_root_password" ] && export MYSQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
     [ -f "/run/secrets/db_password" ] && export MYSQL_PASSWORD=$(cat /run/secrets/db_password)
-
-    mkdir -p /run/mysqld
-    chown -R mysql:mysql /run/mysqld
 
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql > /dev/null
 
