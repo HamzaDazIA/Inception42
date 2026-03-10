@@ -17,24 +17,24 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
     wp core download --path=/var/www/html --allow-root > /dev/null
 
     wp config create --path=/var/www/html \
-        --dbname=$MYSQL_DATABASE \
+        --dbname="$MYSQL_DATABASE" \
         --dbhost=mariadb:3306 \
-        --dbuser=$MYSQL_USER \
-        --dbpass=$DB_PASSWORD \
+        --dbuser="$MYSQL_USER" \
+        --dbpass="$DB_PASSWORD" \
         --allow-root
     
     wp core install --path=/var/www/html --allow-root \
         --skip-email \
-        --url=$DOMAIN_NAME \
+        --url="$DOMAIN_NAME" \
         --title="$WORDPRESS_TITLE" \
-        --admin_user=$WORDPRESS_ADMIN_USER \
-        --admin_password=$WP_ADMIN_PASSWORD \
-        --admin_email=$WORDPRESS_ADMIN_EMAIL
+        --admin_user="$WORDPRESS_ADMIN_USER" \
+        --admin_password="$WP_ADMIN_PASSWORD" \
+        --admin_email="$WORDPRESS_ADMIN_EMAIL"
 
     wp user create --allow-root \
-        $WORDPRESS_USER \
-        $WORDPRESS_EMAIL \
-        --user_pass=$WP_PASSWORD \
+        "$WORDPRESS_USER" \
+        "$WORDPRESS_EMAIL" \
+        --user_pass="$WP_PASSWORD" \
         --role=author
     
     echo "WordPress step completed"
