@@ -44,13 +44,22 @@ services:
       - mariadb
   redis:
     container_name: redis
-    build: requirements/redis
+    build: requirements/bonus/redis
     restart: on-failure
     networks:
       - docker-networks
     depends_on:
       - wordpress
-
+  adminer:
+    container_name: adminer
+    build: requirements/bonus/Adminer
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    networks:
+      - docker-networks
+    depends_on:
+      - mariadb
 networks:
   docker-networks:
     name: docker-networks
