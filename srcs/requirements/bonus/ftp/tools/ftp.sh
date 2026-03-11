@@ -3,9 +3,9 @@
 set -e
 
 if  ! id "$FTP_USER" &>/dev/null ; then
-    useradd -d /var/www/hhml -s /usr/sbin/nologin $FTP_USER
+    useradd -d /var/www/html -s /usr/sbin/nologin $FTP_USER
 
-    [ -f /run/secrets/FTP_PASSWORD ] && export FTP_PASSWORD=$(cat /run/secrets/ftp_password)
+    [ -f /run/secrets/ftp_password ] && export FTP_PASSWORD=$(cat /run/secrets/ftp_password)
     
     echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
 
