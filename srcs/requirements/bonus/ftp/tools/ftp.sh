@@ -2,20 +2,16 @@
 
 set -e
 
-if  ! id "$FTP_USER" &>/dev/null ; then
-    useradd -d /var/www/html -s /usr/sbin/nologin $FTP_USER
+if [ ! -f /etc/.firstrun ]; then
 
-    [ -f /run/secrets/ftp_password ] && export FTP_PASSWORD=$(cat /run/secrets/ftp_password)
-    
-    echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+	[ -f /run/secrets/ftp_password ] && export FTP_PASSWORD=$(cat /run/secrets/ftp_password)
 
-    usermod -aG www-data $FTP_USER
+	useradd -m "$FTP_USER"
+	echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+	chown -R "$FTP_USER" /var/www/html
 
-    chown -R $FTP_USER:www-data /var/www/html
+	touch /etc/.firstrun
 
-    echo "FTP user $FTP_USER created and configured."
-else 
-    echo "FTP user $FTP_USER already exists."
 fi
 
 exec vsftpd /etc/vsftpd.conf

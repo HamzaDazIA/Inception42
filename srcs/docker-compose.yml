@@ -68,16 +68,17 @@ services:
       - "9090:9090"
     networks:
       - docker-networks
-
   ftp:
     container_name: ftp
     build: requirements/bonus/ftp
     restart: on-failure
     ports:
       - 21:21
-      - 50000-50009:50000-50009
+      - 21000-21010:21000-21010
     volumes:
       - WordPress:/var/www/html
+    networks:
+      - docker-networks
     env_file: .env
     secrets:
       - ftp_password

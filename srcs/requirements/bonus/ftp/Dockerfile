@@ -6,9 +6,10 @@ RUN apt-get update && apt-get install -y \
 
 COPY conf/vsftpd.conf /etc/vsftpd.conf
 
+RUN mkdir -p /var/run/vsftpd/empty
+
 COPY tools/ftp.sh /usr/bin/ftp.sh
 RUN chmod +x /usr/bin/ftp.sh
 
-EXPOSE 21  50000 50009
 
 CMD ["/usr/bin/ftp.sh"]

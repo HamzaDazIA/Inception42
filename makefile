@@ -1,13 +1,13 @@
-PATH = srcs/docker-compose.yml
+COMPOSE_FILE = srcs/docker-compose.yml
 
 up:
-	docker-compose -f $(PATH) up --build -d
+	docker compose -f $(COMPOSE_FILE) up --build -d
 
 down:
-	docker-compose -f $(PATH) down
+	docker compose -f $(COMPOSE_FILE) down
 
 clean:
-	docker-compose -f $(PATH) down -v --remove-orphans
+	docker compose -f $(COMPOSE_FILE) down -v --remove-orphans
 
 fclean: clean
 	docker image prune -af 
