@@ -1,5 +1,5 @@
 server.document-root = "/var/www/html"
-server.port = 8080
+server.port = 9090
 server.indexfiles = ("index.html")
 mimetype.assign = (
     ".html" => "text/html",
