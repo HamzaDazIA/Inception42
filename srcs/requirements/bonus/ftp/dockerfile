@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY conf/vsftpd.conf /etc/vsftpd.conf
 
-COPY tools/ftp.sh usr/bin
+COPY tools/ftp.sh /usr/bin/ftp.sh
 RUN chmod +x /usr/bin/ftp.sh
 
 EXPOSE 21  50000 50009
