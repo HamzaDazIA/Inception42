@@ -60,6 +60,14 @@ services:
       - docker-networks
     depends_on:
       - mariadb
+  static_site:
+    container_name: static_site
+    build: requirements/bonus/static_site
+    restart: on-failure
+    ports:
+      - "9090:9090"
+    networks:
+      - docker-networks
 networks:
   docker-networks:
     name: docker-networks

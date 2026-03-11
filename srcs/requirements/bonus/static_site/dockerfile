@@ -8,6 +8,6 @@ COPY conf/conf /etc/lighttpd/
 
 COPY tools/index.html /var/www/html/
 
-EXPOSE 8080
+EXPOSE 9090
 
 CMD ["lighttpd", "-D", "-f", "/etc/lighttpd/lighttpd.conf"]
