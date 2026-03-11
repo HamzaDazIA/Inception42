@@ -83,6 +83,19 @@ services:
       - ftp_password
     depends_on:
       - wordpress
+  cadvisor:
+    container_name: cadvisor
+    build: requirements/bonus/cadivsor
+    restart: on-failure
+    ports:
+      - "9080:9080"
+    networks:
+      - docker-networks
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
 networks:
   docker-networks:
     name: docker-networks
