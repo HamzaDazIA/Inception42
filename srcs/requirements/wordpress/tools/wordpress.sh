@@ -25,7 +25,7 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
     
     wp core install --path=/var/www/html --allow-root \
         --skip-email \
-        --url="$DOMAIN_NAME" \
+        --url="https://$DOMAIN_NAME" \
         --title="$WORDPRESS_TITLE" \
         --admin_user="$WORDPRESS_ADMIN_USER" \
         --admin_password="$WP_ADMIN_PASSWORD" \
